@@ -1,0 +1,40 @@
+SELECT * FROM enrollment;
+    
+SELECT first_name, dept_code, course_num, term, year, section_number
+FROM students st
+	JOIN enrollment e
+		ON e.student_id = st.student_id
+	JOIN section se
+		ON se.section_id = e.section_id
+	JOIN terms t
+		ON se.terms_id = t.terms_id
+	JOIN section_has_courses shc
+		ON se.section_id = shc.section_id
+	JOIN courses c
+		ON shc.course_id = c.course_id
+ORDER BY first_name, dept_code;
+
+SELECT first_name, last_name, gender, city, state, birthdate
+FROM students s
+	JOIN cities c
+		ON s.city_id = c.city_id
+ORDER BY student_id;
+
+SELECT year, term, dept_code, course_num, section_number, faculty_fname, faculty_lname, capacity
+FROM section se
+	JOIN  section_has_courses shc
+		ON se.section_id = shc.section_id
+	JOIN courses c
+		ON shc.course_id = c.course_id
+	JOIN terms t
+		ON se.terms_id = t.terms_id
+	JOIN teachers tea
+		ON se.teachers_id = tea.teachers_id
+ORDER BY year DESC, dept_code, course_num, section_number;
+
+SELECT college_name, department_name, d.dept_code, course_num, course_title, credits
+FROM colleges co
+	JOIN departments d
+		ON co.college_id = d.college_id
+	JOIN courses cs
+		ON d.dept_code = cs.dept_code;
